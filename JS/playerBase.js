@@ -1,10 +1,11 @@
-export const playerBase = (() => {
+export const playerBase = ((unit,turn) => {
     let state = {
         unit:unit,
-        chosenCell:null
+        chosenCell:null,
+        isTurn:turn
         
     }
-    let updateCell = () => {
+    let updateCell = (cell) => {
         let chosenCell = state.chosenCell;
         chosenCell.innerHTML += `<p class='cellValue'>${state.unit}</p>`;
         chosenCell.dataset.state = 'full';

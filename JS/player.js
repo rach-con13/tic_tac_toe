@@ -1,39 +1,37 @@
 let gameGrid = document.querySelector('.gameGrid');
 import {playerBase} from './playerBase.js';
 export const player = ((unit) => {
-    let state = {
-        unit:unit,
-        chosenCell:null
-        
-    }
+    const basePlayer = playerBase(unit,true);
+   
+    let chooseCell = (e,setTurn) => {
+         
+             
+                if(e.target) {
+                    let cell = e.target.closest('.cell');
+                    if(cell.dataset.state == 'empty') {
+                        console.log('we are empty');
+                        basePlayer.state.chosenCell = cell;
+                        
 
-  
-    let chooseCell = (turn,cb) => {
-        if(turn == 'player') {
-            gameGrid.addEventListener('click',(e) => {
-                let cell = e.target.closest('.cell');
-                if(cell.dataset.state == 'empty') {
-                    state.chosenCell = cell;
-                    if(turn == 'player') {
-                        updateCell();
-                    } else {
-                        console.log("its not your turn")
+                            basePlayer.updateCell();
+                            setTurn('com');
+
+                    
+                            
+                     
+                    
                     }
-                    turn = 'com'; // now computer's turn
-                   
                 }
+                
+               
             
-            })
-    }
+    
          
     }
-    let updateCell = () => {
-        let chosenCell = state.chosenCell;
-        chosenCell.innerHTML += `<p class='cellValue'>${state.unit}</p>`;
-        chosenCell.dataset.state = 'full';
-    }
+  
 
     return {
+        turn:basePlayer.state.isTurn,
         chooseCell
     }
 })
